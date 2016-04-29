@@ -1,0 +1,11 @@
+version: '2'
+services:
+  concourse:
+    build: .
+    ports:
+     - "8080:8080"
+  sonarqube:
+    image: sonarqube
+    ports:
+     - "9000:9000"
+     - "9092:9092"
