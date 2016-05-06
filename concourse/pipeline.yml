@@ -1,0 +1,27 @@
+resources:
+  - name: source-code
+    type: git
+    source:
+      uri: "https://github.com/spilth/concourse-maven-spring-boot.git"
+      branch: master
+jobs:
+  - name: package
+    plan:
+    - get: source-code
+      trigger: true
+    - task: package
+      privileged: true
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source:
+            repository: java
+            tag: latest
+        inputs:
+          - name: source-code
+        run:
+          path: "source-code/mvnw"
+          args: ["-f", "source-code/pom.xml", "sonar:sonar", "-Dsonar.host.url=http://{{DOCKER_IP}}:9000"]
+        params:
+          MAVEN_BASEDIR: source-code

@@ -2,8 +2,11 @@ version: '2'
 services:
   concourse:
     build: .
+    #dockerfile: concourse.Dockerfile
+    privileged: true
     ports:
      - "8080:8080"
+    dns: 8.8.8.8
   sonarqube:
     image: sonarqube
     ports:
