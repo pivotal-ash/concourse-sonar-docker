@@ -31,10 +31,12 @@ chmod +x fly
 echo "Downloading fly complete"
 
 DOCKER_IP=`netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}'`
-sed -i'' -e "s/{{DOCKER_IP}}/${DOCKER_IP}/g" pipeline.yml
+
+sed -i'' -e "s|{{DOCKER_IP}}|${DOCKER_IP}|g" vars.yml
+cat vars.yml
 
 ./fly -t static-analysis login -c http://localhost:8080 -u admin -p admin
-./fly -t static-analysis set-pipeline -p static-analysis -c pipeline.yml -n
+./fly -t static-analysis set-pipeline -p static-analysis -c pipeline.yml -n -l vars.yml
 ./fly -t static-analysis unpause-pipeline -p static-analysis
 
 sleep 5

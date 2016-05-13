@@ -2,6 +2,7 @@
 set -e
 
 cp /concourse/resolv.conf /etc/
+cp -r /concourse/.ssh ~/
 
 /etc/init.d/postgresql restart
 sleep 5

@@ -2,8 +2,9 @@ resources:
   - name: source-code
     type: git
     source:
-      uri: "https://github.com/spilth/concourse-maven-spring-boot.git"
+      uri: {{repo-uri}}
       branch: master
+      private-key: {{private-key}}
 jobs:
   - name: package
     plan:
@@ -22,6 +23,6 @@ jobs:
           - name: source-code
         run:
           path: "source-code/mvnw"
-          args: ["-f", "source-code/pom.xml", "sonar:sonar", "-Dsonar.host.url=http://{{DOCKER_IP}}:9000"]
+          args: ["-f", "source-code/pom.xml", "sonar:sonar", "-Dsonar.host.url=http://{{docker-ip}}:9000"]
         params:
           MAVEN_BASEDIR: source-code

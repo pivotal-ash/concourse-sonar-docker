@@ -12,6 +12,7 @@ VBoxManage controlvm "concourse-sonar" natpf1 "tcp-port9092,tcp,,9092,,9092"
 #docker build -t concourse-sonarqube .
 #docker run -p 8080:8080 concourse-sonarqube
 cp /etc/resolv.conf concourse/
+cp -r ~/.ssh concourse/
 eval "$(docker-machine env concourse-sonar)"
 docker-compose up
 
